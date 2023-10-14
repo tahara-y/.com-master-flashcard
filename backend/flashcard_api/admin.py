@@ -23,24 +23,3 @@ class FlashcardAdmin(ImportExportModelAdmin):
     ordering = ['id']
     list_display = ('id', 'word', 'description')
     resource_class = FlashcardResource
-
-    # # Excelファイルのアップロード処理
-    # def import_action(self, request, *args, **kwargs):
-    #     if 'input_excel' in request.FILES:
-    #         excel_file = request.FILES['input_excel']
-
-    #         # pandasを使用してExcelファイルを読み込む
-    #         df = pd.read_excel(excel_file)
-
-    #         # データベースにデータを保存
-    #         for _, row in df.iterrows():
-    #             wordId = row['wordId']
-    #             word = row['word']
-    #             description = row['description']
-    #             flashcard = Flashcard(
-    #                 wordId=wordId, word=word, description=description)
-    #             flashcard.save()
-
-    #         self.message_user(request, "Excelファイルのデータをインポートしました。")
-    #     else:
-    #         self.message_user(request, "Excelファイルがアップロードされていません。")

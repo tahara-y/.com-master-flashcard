@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "flashcard_api.apps.FlashcardApiConfig",
     'import_export',
+    'account.apps.AccountConfig',
 ]
 
 IMPORT_EXPORT_IMPORT_PERMISSION_CODE = 'change'
