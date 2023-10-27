@@ -1,10 +1,8 @@
-from rest_framework import permissions, status
+from rest_framework import permissions, status, viewsets
 from rest_framework.response import Response
-from rest_framework.generics import ListCreateAPIView, CreateAPIView, RetrieveAPIView
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.generics import CreateAPIView, RetrieveAPIView
 from .models import Flashcard
 from .serializers import FlashcardSerializer, UserSerializer
-from django.shortcuts import render
 
 
 class CreateUserView(CreateAPIView):
@@ -27,7 +25,8 @@ class ProfileUserView(RetrieveAPIView):
         return Response(response, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
-class FlashcardApi(ListCreateAPIView):
+class FlashcardViewSet(viewsets.ModelViewSet):
     queryset = Flashcard.objects.all()
     serializer_class = FlashcardSerializer
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
