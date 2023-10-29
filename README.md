@@ -30,3 +30,16 @@ pip freeze > requirements.txt
 pip install -r requirements.txt
 
 以上の手順で、`myenv`という仮想環境の中に`requirements.txt`にリストされたモジュールをインストールすることができます。
+
+### .gitignore の作成
+
+# myenv ディレクトリ（python の仮想環境）を無視
+
+<!--
+myenv
+db.sqlite3
+*.pyc
+__pycache__
+.DS_Store
+/.gitignore
+-->
