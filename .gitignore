@@ -1,0 +1,14 @@
+# myenvディレクトリ（pythonの仮想環境）を無視
+myenv
+
+# SQLiteデータベースファイル（db.sqlite3）を除外
+db.sqlite3
+
+# Pythonバイトコンパイルファイル（.pyc）を除外
+*.pyc
+
+# Pythonキャッシュディレクトリ（__pycache__）を除外
+__pycache__
+
+#  macOS ファイルシステムが生成するファイルを除外
+.DS_Store
