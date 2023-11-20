@@ -12,6 +12,7 @@ class CreateUserView(CreateAPIView):
 
 class ProfileUserView(RetrieveAPIView):
     serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_object(self):
         return self.request.user
@@ -28,5 +29,5 @@ class ProfileUserView(RetrieveAPIView):
 class FlashcardViewSet(viewsets.ModelViewSet):
     queryset = Flashcard.objects.all()
     serializer_class = FlashcardSerializer
-    # permission_classes = [permissions.IsAuthenticated]
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.AllowAny]
