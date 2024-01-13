@@ -1,0 +1,12 @@
+{
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.autopep8",
+    "editor.formatOnSave": true
+  },
+  "python.linting.mypyEnabled": true,
+  "python.linting.pylintEnabled": true,
+  "python.formatting.provider": "black",
+  "python.linting.pylintArgs": ["--disable", "line-too-long,bad-continuation"],
+  "python.linting.mypyArgs": ["--disallow-untyped-defs"],
+  "cSpell.words": ["formik", "myenv", "pycache", "venv"]
+}

@@ -12,7 +12,8 @@ TOKEN_URL = '/api/auth/'
 class AuthorizedUserApiTests(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
-            username='dummy', email='dummy@example.com', password='dummy_pw'
+            username='dummy@example.com',
+            password='dummy_pw'
         )
         self.client = APIClient()
         self.client.force_authenticate(user=self.user)
@@ -21,14 +22,12 @@ class AuthorizedUserApiTests(TestCase):
         res = self.client.get(PROFILE_URL)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data, {
-            'username': self.user.username,
-            'email': self.user.email,
+            'username': self.user.username
         })
 
     def test_1_2_should_not_allowed_by_PUT(self):
         payload = {
-            'username': 'dummy',
-            'email': 'dummy@example.com',
+            'username': 'dummy@example.com',
             'password': 'dummy_pw'
         }
         res = self.client.put(PROFILE_URL, payload)
@@ -36,8 +35,7 @@ class AuthorizedUserApiTests(TestCase):
 
     def test_1_3_should_not_allowed_by_patch(self):
         payload = {
-            'username': 'dummy',
-            'email': 'dummy@example.com',
+            'username': 'dummy@example.com',
             'password': 'dummy_pw'
         }
         res = self.client.patch(PROFILE_URL, payload)
@@ -50,8 +48,7 @@ class UnauthorizedUserApiTests(TestCase):
 
     def test_1_4_should_create_new_user(self):
         payload = {
-            'username': 'dummy',
-            'email': 'dummy@example.com',
+            'username': 'dummy@example.com',
             'password': 'dummy_pw'
         }
         res = self.client.post(CREATE_USER_URL, payload)
@@ -64,8 +61,7 @@ class UnauthorizedUserApiTests(TestCase):
 
     def test_1_5_should_not_create_user_by_same_credentials(self):
         payload = {
-            'username': 'dummy',
-            'email': 'dummy@example.com',
+            'username': 'dummy@example.com',
             'password': 'dummy_pw'
         }
         get_user_model().objects.create_user(**payload)
@@ -74,8 +70,7 @@ class UnauthorizedUserApiTests(TestCase):
 
     def test_1_6_should_response_token(self):
         payload = {
-            'username': 'dummy',
-            'email': 'dummy@example.com',
+            'username': 'dummy@example.com',
             'password': 'dummy_pw'
         }
         get_user_model().objects.create_user(**payload)
@@ -85,13 +80,11 @@ class UnauthorizedUserApiTests(TestCase):
 
     def test_1_7_should_response_token_with_invalid_credentials(self):
         payload = {
-            'username': 'dummy',
-            'email': 'dummy@example.com',
+            'username': 'dummy@example.com',
             'password': 'dummy_pw'
         }
         wrong_payload = {
-            'username': 'dummy',
-            'email': 'dummy@example.com',
+            'username': 'dummy@example.com',
             'password': 'wrong_pw'
         }
         get_user_model().objects.create_user(**payload)
@@ -101,8 +94,7 @@ class UnauthorizedUserApiTests(TestCase):
 
     def test_1_8_should_not_response_with_non_exist_credentials(self):
         payload = {
-            'username': 'dummy',
-            'email': 'dummy@example.com',
+            'username': 'dummy@example.com',
             'password': 'dummy_pw'
         }
         res = self.client.post(TOKEN_URL, payload)

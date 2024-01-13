@@ -4,7 +4,10 @@ from . import views
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
-router.register('flashcard', views.FlashcardViewSet)
+router.register('flashcards', views.FlashcardViewSet,  basename='flashcard')
+router.register('chapterNum', views.ChapterNumberViewSet,
+                basename='chapterNum')
+router.register('userProfile', views.UserProfileView, basename='userProfile')
 
 app_name = 'api'
 
