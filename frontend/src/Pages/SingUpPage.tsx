@@ -16,7 +16,6 @@ const SingUpPage = () => {
   const handleClickHideOrShowButton = () => setShow(!show);
   const [touchedFormInput, setTouchedFormInput] = useState({
     userName: false,
-    email: false,
     password: false,
   });
 
@@ -29,10 +28,9 @@ const SingUpPage = () => {
   const handleClickSignUpButton = async () => {
     setTouchedFormInput({
       userName: true,
-      email: true,
       password: true,
     });
-    if (!Boolean(formik.errors.userName) && !Boolean(formik.errors.email) && !Boolean(formik.errors.password)) {
+    if (!Boolean(formik.errors.userName) && !Boolean(formik.errors.password)) {
       try {
         await CreateUser(formik.values);
         navigate('../');
@@ -54,7 +52,6 @@ const SingUpPage = () => {
 
   const formik = useFormik<SignUpFormType>({
     initialValues: {
-      email: '',
       userName: '',
       password: '',
     },
@@ -65,7 +62,6 @@ const SingUpPage = () => {
   useEffect(() => {
     setTouchedFormInput({
       userName: false,
-      email: false,
       password: false,
     });
     formik.validateForm();
@@ -76,14 +72,14 @@ const SingUpPage = () => {
   return (
     <>
       <SHeader>
-        <SHeaderText>Sing Up</SHeaderText>
+        <SHeaderText>Sign Up</SHeaderText>
         <SLogin href='../'>Log In</SLogin>
       </SHeader>
       <SContent>
         <SInputContainer>
           <SInputFormStyle>
             <FormInput
-              placeholder='Name'
+              placeholder='Email'
               height='3.125rem'
               name='userName'
               value={formik.values.userName}
@@ -94,21 +90,6 @@ const SingUpPage = () => {
             <FormInvalidError
               isInvalid={touchedFormInput.userName && Boolean(formik.errors.userName)}
               errorMessage={formik.errors.userName}
-            />
-          </SInputFormStyle>
-          <SInputFormStyle>
-            <FormInput
-              placeholder='Email'
-              height='3.125rem'
-              name='email'
-              value={formik.values.email}
-              onChange={formik.handleChange}
-              isInvalid={touchedFormInput.email && Boolean(formik.errors.email)}
-              errorBorderColor='crimson'
-            />
-            <FormInvalidError
-              isInvalid={touchedFormInput.email && Boolean(formik.errors.email)}
-              errorMessage={formik.errors.email}
             />
           </SInputFormStyle>
           <SInputFormStyle>

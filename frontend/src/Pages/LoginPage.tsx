@@ -45,7 +45,7 @@ const LogInPage = () => {
           });
           return;
         };
-        const userProfileData = GetUserProfile(authTokenData.token)
+        const userProfileData = await GetUserProfile(authTokenData.token)
         navigate('/menu', { state: userProfileData });
       } catch (error) {
         console.error('サインイン中にエラーが発生しました:', error);
@@ -74,7 +74,7 @@ const LogInPage = () => {
           <SInputContainer>
             <SInputFormStyle>
               <FormInput
-                placeholder='User Name'
+                placeholder='Email'
                 height='3.125rem'
                 name='userName'
                 value={formik.values.userName}
@@ -162,7 +162,7 @@ const SContent = styled.div`
 `;
 
 const SInputContainer = styled.div`
-  margin-bottom: 178px;
+  margin-bottom: 112px;
 `;
 
 const SInputFormStyle = styled.div`

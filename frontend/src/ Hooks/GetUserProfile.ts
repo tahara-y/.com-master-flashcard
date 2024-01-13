@@ -1,5 +1,4 @@
 type GetUserProfileType = {
-  email:string;
   userName:string;
 };
 
@@ -13,7 +12,6 @@ const GetUserProfile = async(token:string):Promise<GetUserProfileType> => {
   });
   const data = await response.json()
   return{
-    email:data.email,
     userName:data.username,
   };
 };

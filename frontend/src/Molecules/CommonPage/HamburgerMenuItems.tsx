@@ -14,52 +14,37 @@ const HamburgerMenuItems = () => {
 
   return (
     <HamburgerMenu>
-      <SNameContent>
-        <SName>Tahara Yuki</SName>
-        <SEmailAddress>tahara-y@example.com</SEmailAddress>
-      </SNameContent>
-      <SDivider />
-      <div>
-        <SButton variant='ghost'>
-          <AiOutlineSetting size="24px" />
-          <SButtonText>Setting</SButtonText>
-        </SButton>
-      </div>
-      <SDivider />
-      <div>
-        <SButton variant='ghost'>
-          <BiUser size="24px" />
-          <SButtonText>Profile</SButtonText>
-        </SButton>
-      </div>
-      <SDivider />
-      <div>
-        <SButton onClick={handleClickSignOutButton} variant='ghost'>
-          <HiOutlineLogout size="24px" />
-          <SButtonText>Sign out</SButtonText>
-        </SButton>
-      </div>
-      <SDivider />
-    </HamburgerMenu>
+      <SContent>
+        <SDivider />
+        < div >
+          <SButton variant='ghost'>
+            <AiOutlineSetting size="24px" />
+            <SButtonText>Setting</SButtonText>
+          </SButton>
+        </ div>
+        <SDivider />
+        <div>
+          <SButton variant='ghost'>
+            <BiUser size="24px" />
+            <SButtonText>Profile</SButtonText>
+          </SButton>
+        </div>
+        <SDivider />
+        <div>
+          <SButton onClick={handleClickSignOutButton} variant='ghost'>
+            <HiOutlineLogout size="24px" />
+            <SButtonText>Sign out</SButtonText>
+          </SButton>
+        </div>
+        <SDivider />
+      </SContent>
+    </HamburgerMenu >
   );
 };
 
-const SNameContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-bottom: 1rem;
+const SContent = styled.div`
   margin-top: 1rem;
-`;
-
-const SName = styled.div`
-  opacity: 87%;
-  font-weight: bold;
-`;
-
-const SEmailAddress = styled.div`
-  opacity: 60%;
-  font-size: 0.875rem;
+  width: 90%;
 `;
 
 const SDivider = styled.hr`

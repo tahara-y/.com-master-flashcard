@@ -2,37 +2,54 @@ import { Button } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
-const ChapterSelection = () => {
+export type ChapterSelectionPropsType = {
+  chapterNum: number;
+  setChapterNum: React.Dispatch<React.SetStateAction<number>>;
+}
+
+const ChapterSelection: React.FC<ChapterSelectionPropsType> = (props) => {
+  const { chapterNum, setChapterNum } = props;
   const navigate = useNavigate();
-  const handleClickPrimaryButton = () => {
-    navigate('/flashcard');
+  const handleClickPrimaryButton = async (num: number) => {
+    setChapterNum(num);
+    navigate('/flashcard', { state: { chapterNum: num } });
   };
   return (
     <>
       <SChapterHeadText>CHAPTER</SChapterHeadText>
       <ChapterContainer>
         <SCapterSelectionContainer>
-          <SCapterSelectionComponent variant='ghost' onClick={handleClickPrimaryButton}>
+          <SCapterSelectionComponent
+            variant='ghost'
+            onClick={() => handleClickPrimaryButton(1)}>
             <SCapterSelectionText>1.インターネットの仕組みと関連技術</SCapterSelectionText>
             <SCapterSelectionIcon>⁨〉</SCapterSelectionIcon>
           </SCapterSelectionComponent>
           <SDivider />
-          <SCapterSelectionComponent variant='ghost' onClick={handleClickPrimaryButton}>
+          <SCapterSelectionComponent
+            variant='ghost'
+            onClick={() => handleClickPrimaryButton(2)}>
             <SCapterSelectionText>2.インターネット接続の設定とトラブル処理</SCapterSelectionText>
             <SCapterSelectionIcon>⁨〉</SCapterSelectionIcon>
           </SCapterSelectionComponent>
           <SDivider />
-          <SCapterSelectionComponent variant='ghost' onClick={handleClickPrimaryButton}>
+          <SCapterSelectionComponent
+            variant='ghost'
+            onClick={() => handleClickPrimaryButton(3)}>
             <SCapterSelectionText>3.ICTの設定と使いこなし</SCapterSelectionText>
             <SCapterSelectionIcon>⁨〉</SCapterSelectionIcon>
           </SCapterSelectionComponent>
           <SDivider />
-          <SCapterSelectionComponent variant='ghost' onClick={handleClickPrimaryButton}>
+          <SCapterSelectionComponent
+            variant='ghost'
+            onClick={() => handleClickPrimaryButton(4)}>
             <SCapterSelectionText>4.セキュリティ</SCapterSelectionText>
             <SCapterSelectionIcon>⁨〉</SCapterSelectionIcon>
           </SCapterSelectionComponent>
           <SDivider />
-          <SCapterSelectionComponent variant='ghost' onClick={handleClickPrimaryButton}>
+          <SCapterSelectionComponent
+            variant='ghost'
+            onClick={() => handleClickPrimaryButton(5)}>
             <SCapterSelectionText>5.ICTの活用と法律</SCapterSelectionText>
             <SCapterSelectionIcon>⁨〉</SCapterSelectionIcon>
           </SCapterSelectionComponent>

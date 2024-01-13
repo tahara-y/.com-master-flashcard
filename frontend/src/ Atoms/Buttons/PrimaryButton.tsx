@@ -9,10 +9,11 @@ type PrimaryButtonType = {
   onClick?: () => void;
   height?: string;
   type?: 'button' | 'submit' | 'reset';
+  isDisabled?: boolean;
 }
 
 const PrimaryButton: React.FC<PrimaryButtonType> = (props) => {
-  const { children, colorScheme, color, onClick, height, type } = props;
+  const { children, colorScheme, color, onClick, height, type, isDisabled } = props;
   return (
     <SButton
       colorScheme={colorScheme}
@@ -20,6 +21,7 @@ const PrimaryButton: React.FC<PrimaryButtonType> = (props) => {
       onClick={onClick}
       height={height}
       type={type}
+      isDisabled={isDisabled}
     >
       {children}
     </SButton>

@@ -7,10 +7,11 @@ type SecondaryButtonType = {
   onClick?: () => void;
   height?: string;
   width?: string;
+  isDisabled?: boolean;
 }
 
 const SecondaryButton: React.FC<SecondaryButtonType> = (props) => {
-  const { children, onClick, height, width } = props;
+  const { children, onClick, height, width, isDisabled } = props;
   return (
     <SButton
       colorScheme='white'
@@ -18,7 +19,8 @@ const SecondaryButton: React.FC<SecondaryButtonType> = (props) => {
       color='green'
       onClick={onClick}
       height={height}
-      width={width}>
+      width={width}
+      isDisabled={isDisabled}>
       {children}
     </SButton>
   )

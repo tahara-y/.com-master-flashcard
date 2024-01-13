@@ -3,8 +3,10 @@ import { CircularProgress, CircularProgressLabel } from '@chakra-ui/react';
 import ChapterSelection from '../Molecules/MenuPage/ChapterSelection';
 import LearningProgressButtons from '../Molecules/MenuPage/LearningProgressButtons';
 import MainHeader from '../Molecules/MenuPage/Header';
+import { useState } from 'react';
 
 const MenuPage = () => {
+  const [chapterNum, setChapterNum] = useState<number>(0);
   return (
     <>
       <MainHeader />
@@ -15,8 +17,12 @@ const MenuPage = () => {
             <SCircularProgressText>spent</SCircularProgressText>
           </CircularProgressLabel>
         </CircularProgress>
-        <LearningProgressButtons />
-        <ChapterSelection />
+        <LearningProgressButtons
+          chapterNum={chapterNum}
+          setChapterNum={setChapterNum} />
+        <ChapterSelection
+          chapterNum={chapterNum}
+          setChapterNum={setChapterNum} />
       </SContent >
     </>
   )
