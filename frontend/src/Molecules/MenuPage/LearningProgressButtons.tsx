@@ -2,10 +2,17 @@ import styled from '@emotion/styled';
 import PrimaryButton from '../../ Atoms/Buttons/PrimaryButton';
 import { useNavigate } from 'react-router-dom';
 
-const LearningProgressButtons = () => {
+export type LearningProgressButtonsPropsType = {
+  chapterNum: number;
+  setChapterNum: React.Dispatch<React.SetStateAction<number>>;
+}
+
+const LearningProgressButtons: React.FC<LearningProgressButtonsPropsType> = (props) => {
+  const { chapterNum, setChapterNum } = props;
   const navigate = useNavigate();
-  const handleClickPrimaryButton = () => {
-    navigate('/flashcard');
+  const handleClickPrimaryButton = (num: number) => {
+    setChapterNum(num);
+    navigate('/flashcard', { state: { chapterNum: num } });
   };
   return (
     <LearningProgressButtonContainer>
@@ -15,7 +22,7 @@ const LearningProgressButtons = () => {
           colorScheme='green'
           color='white'
           onClick={() => {
-            handleClickPrimaryButton();
+            handleClickPrimaryButton(2);
           }}>
           <LearningProgressButtonText>
             2.インターネット接続の設定とトラブル処理
@@ -28,7 +35,7 @@ const LearningProgressButtons = () => {
           colorScheme='green'
           color='white'
           onClick={() => {
-            handleClickPrimaryButton();
+            handleClickPrimaryButton(3);
           }}
           height='60.8px'>
           <LearningProgressButtonText>

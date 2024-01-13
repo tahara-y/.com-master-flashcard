@@ -4,20 +4,12 @@ export type Response = {
   message: string;
 };
 
-//NOTE:Email Addressの入力フォームのバリデーション
-export const validateEmail = (value: string):Response => {
+//NOTE:ユーザーネームの入力フォームのバリデーション
+export const validateUserName = (value: string):Response => {
   if (!value) {
     return { isValid: false, message: 'メールアドレスを入力してください' };
   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
     return { isValid: false, message: 'メールアドレスに有効でない文字が使用されています' };
-  };
-  return { isValid: true, message: '' };
-}
-
-//NOTE:ユーザーネームの入力フォームのバリデーション
-export const validateUserName = (value: string):Response => {
-  if (!value) {
-    return { isValid: false, message: 'ユーザーネームを入力してください' };
   };
   return { isValid: true, message: '' };
 };
@@ -32,7 +24,6 @@ export const validatePassword = (value: string):Response => {
 
 //NOTE:Sign UPで使用するフォームのデータ型
 export type SignUpFormType = {
-  email: string;
   userName: string;
   password: string;
 };
@@ -43,10 +34,6 @@ export const sighUpValidate = (values: SignUpFormType) => {
     email: '',
     userName: '',
     password: '',
-  };
-  const emailValidatedResult = validateEmail(values.email);
-  if (!emailValidatedResult.isValid) {
-    errors.email = emailValidatedResult.message;
   };
   const userNameValidatedResult = validateUserName(values.userName);
   if (!userNameValidatedResult.isValid) {

@@ -8,8 +8,7 @@ export const CreateUser = async(createUserProps:SignUpFormType) => {
     },
     body: JSON.stringify({
       username: createUserProps.userName,
-      email: createUserProps.email,
       password: createUserProps.password,
     }),
   });
-}; 
+};
