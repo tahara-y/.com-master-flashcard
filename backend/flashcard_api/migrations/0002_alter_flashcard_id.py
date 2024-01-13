@@ -12,6 +12,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="flashcard",
             name="id",
-            field=models.IntegerField(max_length=10, primary_key=True, serialize=False),
+            field=models.IntegerField(
+                max_length=10, primary_key=True, serialize=False),
         ),
     ]
