@@ -1,18 +1,29 @@
+from django.contrib.auth.models import User
 from rest_framework import permissions, status, viewsets
-from rest_framework.response import Response
 from rest_framework.generics import CreateAPIView, RetrieveAPIView
-from .models import Flashcard, ChapterNumber, UserProfile
+from rest_framework.response import Response
+
+from .models import ChapterNumber, Flashcard, UserProfile
 from .serializers import (
-    FlashcardSerializer,
-    UserSerializer,
     ChapterNumberSerializer,
+    FlashcardSerializer,
     UserProfileSerializer,
+    UserSerializer,
 )
 
 
 class CreateUserView(CreateAPIView):
     serializer_class = UserSerializer
     permission_classes = [permissions.AllowAny]
+
+    def create(self, request, *args, **kwargs):
+        response = super().create(request, *args, **kwargs)
+
+        if response.status_code == status.HTTP_201_CREATED:
+            user = User.objects.get(username=response.data["username"])
+            UserProfile.objects.create(user=user)
+
+        return response
 
 
 class ProfileUserView(RetrieveAPIView):
@@ -41,8 +52,7 @@ class UserProfileView(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         # ユーザーに関連する既存のエントリを検索
         user_progress, created = UserProfile.objects.get_or_create(
-            user=request.user,
-            defaults=request.data
+            user=request.user, defaults=request.data
         )
 
         # 既存のエントリが見つかった場合は、データを更新
@@ -54,7 +64,8 @@ class UserProfileView(viewsets.ModelViewSet):
         serializer = self.get_serializer(user_progress)
         return Response(
             serializer.data,
-            status=status.HTTP_201_CREATED if created else status.HTTP_200_OK)
+            status=status.HTTP_201_CREATED if created else status.HTTP_200_OK,
+        )
 
 
 class FlashcardViewSet(viewsets.ModelViewSet):

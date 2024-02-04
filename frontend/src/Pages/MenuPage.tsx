@@ -1,31 +1,86 @@
-import styled from '@emotion/styled';
-import { CircularProgress, CircularProgressLabel } from '@chakra-ui/react';
-import ChapterSelection from '../Molecules/MenuPage/ChapterSelection';
-import LearningProgressButtons from '../Molecules/MenuPage/LearningProgressButtons';
-import MainHeader from '../Molecules/MenuPage/Header';
-import { useState } from 'react';
+import styled from "@emotion/styled";
+import { CircularProgress, CircularProgressLabel } from "@chakra-ui/react";
+import ChapterSelection from "../Molecules/MenuPage/ChapterSelection";
+import LearningProgressButtons from "../Molecules/MenuPage/LearningProgressButtons";
+import MainHeader from "../Molecules/MenuPage/Header";
+import { useEffect, useState } from "react";
+import {
+  ChapterDataType,
+  GetUserProfileData,
+  ResponseUserProfileDataType,
+} from "../ Hooks/GetUserProfileData";
+
+// TODO: 以下の変数をnavigateで渡すようにする。
+// const [currentFlashcardNum, setCurrentFlashcardNum] = useState<number>(1);
 
 const MenuPage = () => {
   const [chapterNum, setChapterNum] = useState<number>(0);
+  const [userProfileData, setUserProfileData] =
+    useState<ResponseUserProfileDataType | null>(null);
+  const [chapterData, setChapterData] = useState<ChapterDataType | null>(null);
+
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    const fetchUserProfileData = async () => {
+      try {
+        if (token !== null) {
+          const response = await GetUserProfileData(token);
+          setUserProfileData(response.userProfileData);
+          setChapterData(response.chapterData);
+        }
+      } catch (error) {
+        if (error instanceof Error) {
+          console.error("Error fetching userProfile data:", error.message);
+        }
+      }
+    };
+    if (token) {
+      fetchUserProfileData();
+    }
+    // tokenを依存関係に含めてしまうと、Flashcard画面からメニュー画面に戻った時にこの関数が更新されない。
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
       <MainHeader />
       <SContent>
-        <CircularProgress value={70.3} size='196px' thickness='1.5px' color='#38A169'>
+        <CircularProgress
+          value={
+            ((userProfileData?.currentId ?? 0) /
+              (Number(process.env.REACT_TOTAL_FLASHCARDS_NUM) || 903)) *
+            100
+          }
+          size="196px"
+          thickness="1.5px"
+          color="#38A169"
+        >
           <CircularProgressLabel>
-            <SCircularProgressText>70.3%</SCircularProgressText>
+            <SCircularProgressText>
+              {(
+                ((userProfileData?.currentId ?? 0) /
+                  (Number(process.env.REACT_TOTAL_FLASHCARDS_NUM) || 903)) *
+                100
+              ).toFixed(2)}
+              %
+            </SCircularProgressText>
             <SCircularProgressText>spent</SCircularProgressText>
           </CircularProgressLabel>
         </CircularProgress>
         <LearningProgressButtons
           chapterNum={chapterNum}
-          setChapterNum={setChapterNum} />
+          setChapterNum={setChapterNum}
+          chapterData={chapterData}
+          currentFlashcardNum={userProfileData?.currentChapterWordOrder}
+        />
         <ChapterSelection
           chapterNum={chapterNum}
-          setChapterNum={setChapterNum} />
-      </SContent >
+          setChapterNum={setChapterNum}
+        />
+      </SContent>
     </>
-  )
+  );
 };
 
 const SContent = styled.div`
@@ -33,16 +88,16 @@ const SContent = styled.div`
   padding-right: 1rem;
   display: flex;
   flex-direction: column;
-  justify-content: center; 
+  justify-content: center;
   align-items: center;
   margin-top: 2rem;
   margin-bottom: 1rem;
 `;
 
 const SCircularProgressText = styled.div`
-  color: #38A169;
+  color: #38a169;
   font-size: 1.25rem;
   height: auto;
 `;
 
-export default MenuPage
+export default MenuPage;

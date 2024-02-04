@@ -1,10 +1,10 @@
-import styled from '@emotion/styled';
-import HamburgerMenuItems from '../CommonPage/HamburgerMenuItems';
+import styled from "@emotion/styled";
+import HamburgerMenuItems from "../CommonPage/HamburgerMenuItems";
 
 const Header = () => {
   return (
     <SHeader>
-      <SLogin href='/menu'>Menu</SLogin>
+      <SLogin href="/menu">TOP</SLogin>
       <SHeaderText>
         <SHeaderTextSmall>.com master</SHeaderTextSmall>
         <SHeaderTextBig>ADVANCE</SHeaderTextBig>
@@ -13,8 +13,8 @@ const Header = () => {
         <HamburgerMenuItems />
       </SHamburgerMenuIcon>
     </SHeader>
-  )
-}
+  );
+};
 
 const SHeader = styled.div`
   display: flex;
@@ -26,7 +26,7 @@ const SHeader = styled.div`
 `;
 
 const SLogin = styled.a`
-  color: #38A169;
+  color: #38a169;
   position: absolute;
   left: 1rem;
   font-weight: 600;
@@ -54,4 +54,4 @@ const SHamburgerMenuIcon = styled.div`
   right: 1rem;
 `;
 
-export default Header
+export default Header;

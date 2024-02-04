@@ -46,6 +46,7 @@ const LogInPage = () => {
           return;
         };
         const userProfileData = await GetUserProfile(authTokenData.token)
+        localStorage.setItem('token', authTokenData.token);
         navigate('/menu', { state: userProfileData });
       } catch (error) {
         console.error('サインイン中にエラーが発生しました:', error);
