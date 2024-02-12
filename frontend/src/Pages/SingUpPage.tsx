@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from 'react'
-import { InputGroup, Checkbox, useToast } from '@chakra-ui/react'
-import styled from '@emotion/styled'
-import FormInput from '../ Atoms/Forms/FormInput';
-import FormInputRightElement from '../ Atoms/Forms/FormInputRightElement';
-import PrimaryButton from '../ Atoms/Buttons/PrimaryButton';
-import { useNavigate } from 'react-router-dom';
-import { useFormik } from 'formik';
-import { SignUpFormType, sighUpValidate } from '../Molecules/CommonPage/ValidateForm';
-import FormInvalidError from '../ Atoms/Forms/FormInvalidError';
-import { CreateUser } from '../ Hooks/CreateUser';
+import React, { useEffect, useState } from "react";
+import { InputGroup, Checkbox, useToast } from "@chakra-ui/react";
+import styled from "@emotion/styled";
+import FormInput from "../ Atoms/Forms/FormInput";
+import FormInputRightElement from "../ Atoms/Forms/FormInputRightElement";
+import PrimaryButton from "../ Atoms/Buttons/PrimaryButton";
+import { useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import {
+  SignUpFormType,
+  sighUpValidate,
+} from "../Molecules/CommonPage/ValidateForm";
+import FormInvalidError from "../ Atoms/Forms/FormInvalidError";
+import { CreateUser } from "../ Hooks/CreateUser";
 
 const SingUpPage = () => {
-
   const [show, setShow] = useState(false);
   const handleClickHideOrShowButton = () => setShow(!show);
   const [touchedFormInput, setTouchedFormInput] = useState({
@@ -22,8 +24,8 @@ const SingUpPage = () => {
   const toast = useToast();
   type StatusToastType = {
     title: string;
-    status: 'success' | 'error' | 'warning' | 'info';
-  }
+    status: "success" | "error" | "warning" | "info";
+  };
   const navigate = useNavigate();
   const handleClickSignUpButton = async () => {
     setTouchedFormInput({
@@ -33,10 +35,10 @@ const SingUpPage = () => {
     if (!Boolean(formik.errors.userName) && !Boolean(formik.errors.password)) {
       try {
         await CreateUser(formik.values);
-        navigate('../');
+        navigate("../");
         const toastProps: StatusToastType = {
-          title: 'アカウントを作成しました',
-          status: 'success',
+          title: "アカウントを作成しました",
+          status: "success",
         };
         toast({
           title: toastProps.title,
@@ -45,18 +47,18 @@ const SingUpPage = () => {
           duration: 10000,
         });
       } catch (error) {
-        console.error('サインアップ中にエラーが発生しました:', error);
-      };
-    };
+        console.error("サインアップ中にエラーが発生しました:", error);
+      }
+    }
   };
 
   const formik = useFormik<SignUpFormType>({
     initialValues: {
-      userName: '',
-      password: '',
+      userName: "",
+      password: "",
     },
     validate: sighUpValidate,
-    onSubmit: () => { },
+    onSubmit: () => {},
   });
 
   useEffect(() => {
@@ -73,76 +75,85 @@ const SingUpPage = () => {
     <>
       <SHeader>
         <SHeaderText>Sign Up</SHeaderText>
-        <SLogin href='../'>Log In</SLogin>
+        <SLogin href="../">Log In</SLogin>
       </SHeader>
       <SContent>
         <SInputContainer>
           <SInputFormStyle>
             <FormInput
-              placeholder='Email'
-              height='3.125rem'
-              name='userName'
+              placeholder="Email"
+              height="3.125rem"
+              name="userName"
               value={formik.values.userName}
               onChange={formik.handleChange}
-              isInvalid={touchedFormInput.userName && Boolean(formik.errors.userName)}
-              errorBorderColor='crimson'
+              isInvalid={
+                touchedFormInput.userName && Boolean(formik.errors.userName)
+              }
+              errorBorderColor="crimson"
             />
             <FormInvalidError
-              isInvalid={touchedFormInput.userName && Boolean(formik.errors.userName)}
+              isInvalid={
+                touchedFormInput.userName && Boolean(formik.errors.userName)
+              }
               errorMessage={formik.errors.userName}
             />
           </SInputFormStyle>
           <SInputFormStyle>
             <InputGroup>
               <FormInput
-                type={show ? 'text' : 'password'}
-                placeholder='Password'
-                height='3.125rem'
-                name='password'
+                type={show ? "text" : "password"}
+                placeholder="Password"
+                height="3.125rem"
+                name="password"
                 value={formik.values.password}
                 onChange={formik.handleChange}
-                isInvalid={touchedFormInput.password && Boolean(formik.errors.password)}
-                errorBorderColor='crimson'
+                isInvalid={
+                  touchedFormInput.password && Boolean(formik.errors.password)
+                }
+                errorBorderColor="crimson"
               />
               <FormInputRightElement
-                width='3rem'
-                height='3.125rem'
-                h='3.125rem'
-                size='sm'
+                width="3rem"
+                height="3.125rem"
+                h="3.125rem"
+                size="sm"
                 onClick={handleClickHideOrShowButton}
-                variant='unstyled'
+                variant="unstyled"
                 show={show}
-              >
-              </FormInputRightElement>
+              ></FormInputRightElement>
             </InputGroup>
             <FormInvalidError
-              isInvalid={touchedFormInput.password && Boolean(formik.errors.password)}
+              isInvalid={
+                touchedFormInput.password && Boolean(formik.errors.password)
+              }
               errorMessage={formik.errors.password}
             />
           </SInputFormStyle>
         </SInputContainer>
         <SCheckBoxContainer>
-          <Checkbox size='md' colorScheme='green' />
+          <Checkbox size="md" colorScheme="green" />
           <SCheckBoxText>
-            I would like to receive your newsletter and other promotional information.
+            I would like to receive your newsletter and other promotional
+            information.
           </SCheckBoxText>
         </SCheckBoxContainer>
         <SButtonStyle>
           <PrimaryButton
-            colorScheme='green'
-            color='white'
+            colorScheme="green"
+            color="white"
             onClick={() => {
               handleClickSignUpButton();
-            }}>
+            }}
+          >
             Sign UP
           </PrimaryButton>
         </SButtonStyle>
         <SForgotContent>
-          <SForgot href=''>Forgot your Password?</SForgot>
+          <SForgot href="">Forgot your Password?</SForgot>
         </SForgotContent>
-      </SContent >
+      </SContent>
     </>
-  )
+  );
 };
 
 const SHeader = styled.div`
@@ -161,7 +172,7 @@ const SHeaderText = styled.div`
 `;
 
 const SLogin = styled.a`
-  color: #38A169;
+  color: #38a169;
   position: absolute;
   right: 1rem;
   font-weight: 600;
@@ -201,7 +212,7 @@ const SForgotContent = styled.div`
 `;
 
 const SForgot = styled.a`
-  color: #38A169;
+  color: #38a169;
   font-weight: bold;
 `;
 

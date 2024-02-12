@@ -1,3 +1,36 @@
 {
-  "cSpell.words": ["chakra", "formik", "Tahara", "Yuki"]
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "python.envFile": "${workspaceFolder}/.env",
+  "eslint.workingDirectories": ["./client"],
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    }
+  },
+  "isort.args": ["--profile", "black"],
+  "flake8.args": ["--max-line-length=100", "--max-complexity=10"],
+  "mypy-type-checker.args": [],
+  "files.trimTrailingWhitespace": true,
+  "files.trimFinalNewlines": true,
+  "cSpell.words": ["Nttpc", "tahara"]
 }

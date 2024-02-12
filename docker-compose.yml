@@ -1,0 +1,36 @@
+version: "3.9"
+services:
+  backend:
+    build: ./backend
+    volumes:
+      - ./backend:/app
+    ports:
+      # - "${BACKEND_PORTS_NUMBER}:8000"
+      - "8000:8000"
+    command: python manage.py runserver 0.0.0.0:8000
+    container_name: backend_container
+
+  frontend:
+    build: ./frontend
+    volumes:
+      - ./frontend:/app
+    command: sh -c 'yarn install && yarn start'
+    ports:
+      - "3000:3000"
+    container_name: frontend_container
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.3.0
+    volumes:
+      - ./backend/mysql/data:/var/lib/mysql
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: "flashcard_db"
+      MYSQL_USER: "tahara-y"
+      MYSQL_PASSWORD: "Nttpc123"
+      MYSQL_ROOT_PASSWORD: "Nttpc123"
+    container_name: db_container
