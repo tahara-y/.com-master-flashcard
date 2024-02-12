@@ -44,7 +44,6 @@ const FlashcardPage = () => {
     if (isChapterNumFetched) {
       const fetchFlashcardData = async () => {
         try {
-          console.log("currentFlashcardNum", currentFlashcardNum);
           const fetchedFlashcards: Flashcard[] = await getFlashcards(
             currentFlashcardNum,
             itemsPerPage,
@@ -78,8 +77,6 @@ const FlashcardPage = () => {
   const [currentPage, setCurrentPage] = useState(
     Math.ceil(state.currentFlashcardNum / itemsPerPage)
   );
-  console.log("state.currentFlashcardNum", state.currentFlashcardNum);
-  console.log("currentPage", currentPage);
   const totalPage = Math.ceil(totalFlashcardsNum / itemsPerPage);
 
   useEffect(() => {
