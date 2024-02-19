@@ -18,7 +18,19 @@ const LearningProgressButtons: React.FC<LearningProgressButtonsPropsType> = (
 ) => {
   const { chapterNum, setChapterNum, chapterData, currentFlashcardNum } = props;
   const navigate = useNavigate();
-  const handleClickPrimaryButton = (num: number) => {
+
+  const handleClickPreviousButton = (num: number) => {
+    if (currentFlashcardNum === undefined) {
+      console.error("currentFlashcardNum is undefined");
+      return;
+    }
+    setChapterNum(num);
+    navigate("/flashcard", {
+      state: { chapterNum: num, currentFlashcardNum: 1 },
+    });
+  };
+
+  const handleClickCurrentButton = (num: number) => {
     if (currentFlashcardNum === undefined) {
       console.error("currentFlashcardNum is undefined");
       return;
@@ -40,7 +52,7 @@ const LearningProgressButtons: React.FC<LearningProgressButtonsPropsType> = (
           colorScheme="green"
           color="white"
           onClick={() => {
-            handleClickPrimaryButton(chapterData?.previousChapterId ?? 0);
+            handleClickPreviousButton(chapterData?.previousChapterId ?? 0);
           }}
           height="60.8px"
         >
@@ -57,7 +69,7 @@ const LearningProgressButtons: React.FC<LearningProgressButtonsPropsType> = (
           colorScheme="green"
           color="white"
           onClick={() => {
-            handleClickPrimaryButton(chapterData?.currentChapterId ?? 0);
+            handleClickCurrentButton(chapterData?.currentChapterId ?? 0);
           }}
           height="60.8px"
         >
