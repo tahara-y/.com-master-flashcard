@@ -15,7 +15,7 @@ services:
     container_name: db_container
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 60s
+      interval: 15s
       timeout: 5s
       retries: 5
       start_period: 10s
@@ -43,3 +43,13 @@ services:
     depends_on:
       db:
         condition: service_healthy
+
+  nginx:
+    build:
+      context: . # プロジェクトのルートディレクトリをビルドコンテキストに設定
+      dockerfile: ./nginx/Dockerfile # nginxディレクトリ内のDockerfileを指定
+    ports:
+      - "80:80"
+    depends_on:
+      - frontend
+      - backend
