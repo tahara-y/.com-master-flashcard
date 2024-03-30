@@ -14,11 +14,11 @@ __pycache__
 .DS_Store
 
 # 環境変数を定義したファイルの除外
-backend/.env
-backend/.envrc
+# backend/.env
+# backend/.envrc
 
-frontend/.env
-frontend/.envrc
+# frontend/.env
+# frontend/.envrc
 
 # MySQL
 backend/mysql
