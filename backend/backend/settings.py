@@ -139,7 +139,7 @@ django_env = "production"
 
 if django_env == "production":
     database_user = "admin"
-    database_host = "com-master-flashcard-db.cintktqwup3t.ap-northeast-1.rds.amazonaws.com"
+    database_host = "db"
 else:
     database_user = "root"
     database_host = "db"
