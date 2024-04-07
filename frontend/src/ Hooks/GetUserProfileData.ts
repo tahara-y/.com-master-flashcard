@@ -34,6 +34,7 @@ export const GetUserProfileData = async (
     `${process.env.REACT_APP_API_URL}/api/userProfile/`,
     {
       method: "GET",
+      mode: "cors",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Token ${token}`,

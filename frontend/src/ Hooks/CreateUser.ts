@@ -3,6 +3,7 @@ import { SignUpFormType } from "../Molecules/CommonPage/ValidateForm";
 export const CreateUser = async (createUserProps: SignUpFormType) => {
   await fetch(`${process.env.REACT_APP_API_URL}/api/create/`, {
     method: "POST",
+    mode: "cors",
     headers: {
       "Content-Type": "application/json",
     },
@@ -11,4 +12,5 @@ export const CreateUser = async (createUserProps: SignUpFormType) => {
       password: createUserProps.password,
     }),
   });
+  console.log('REACT_APP_API_URL' ,process.env.REACT_APP_API_URL)
 };

@@ -8,6 +8,7 @@ type GetAuthTokenType = {
 const  GteAuthToken = async(values:LogInFormType): Promise<GetAuthTokenType> => {
   const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/`, {
     method: 'POST',
+    mode: "cors",
     headers: {
       'Content-Type': 'application/json'
     },

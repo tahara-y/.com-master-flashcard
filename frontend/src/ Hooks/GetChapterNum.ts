@@ -7,6 +7,7 @@ export const getChapterNum = async (chapterNum:number):Promise<GetChapterNum> =>
   const response = 
     await fetch(`${process.env.REACT_APP_API_URL}/api/chapterNum/${chapterNum}`, {
         method: 'GET',
+        mode: "cors",
         headers: {
           'Content-Type': 'application/json',
         },

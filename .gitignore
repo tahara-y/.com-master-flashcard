@@ -14,8 +14,9 @@ __pycache__
 .DS_Store
 
 # 環境変数を定義したファイルの除外
-# backend/.env
-# backend/.envrc
+backend/.env
+backend/.env.production
+backend/.envrc
 
 # frontend/.env
 # frontend/.envrc

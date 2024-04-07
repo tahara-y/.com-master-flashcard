@@ -19,8 +19,13 @@ export const getFlashcards = async (
   ) {
     const id = i.toString().padStart(5, "0");
     const response = await fetch(
-      `${process.env.REACT_APP_API_URL}/api/flashcards/?chapter=${chapterNum}&chapterWordOrder=${id}`
-    );
+      `${process.env.REACT_APP_API_URL}/api/flashcards/?chapter=${chapterNum}&chapterWordOrder=${id}`, {
+        method: 'GET',
+        mode: "cors",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
     if (!response.ok) {
       throw new Error(`HTTP error! (Flashcard ID: ${id}): ${response.status}`);
     }
