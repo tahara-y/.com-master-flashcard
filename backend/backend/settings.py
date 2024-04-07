@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -12,9 +13,6 @@ SECRET_KEY = "django-insecure-s@_g=#s7m0129y641b31mae-@7w&z#-7x%p%%(_u!3e$_c%r3d
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -43,6 +41,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = "backend.urls"
@@ -68,28 +67,6 @@ WSGI_APPLICATION = "backend.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": "flashcard_db",
-        "USER": "tahara-y",
-        "PASSWORD": "Nttpc123",
-        "HOST": "db",
-        "PORT": "3306",
-        "OPTIONS": {
-            "charset": "utf8mb4",
-        },
-    }
-}
-
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": BASE_DIR / "db.sqlite3",
-#     }
-# }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -132,13 +109,6 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-CORS_ALLOW_ALL_ORIGINS = True
-
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://localhost:3001",
-]
-
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
@@ -146,4 +116,43 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.TokenAuthentication",
     ],
+}
+
+CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+]
+
+ALLOWED_HOSTS = ['*']
+
+CSRF_TRUSTED_ORIGINS = ['http://54.178.250.70']
+
+# Djangoアプリケーションで商用環に適用する場合は "production" を開発環境に適用する場合は"develop"を設定する。
+django_env = "production"
+
+if django_env == "production":
+    database_user = "admin"
+    database_host = "com-master-flashcard-db.cintktqwup3t.ap-northeast-1.rds.amazonaws.com"
+else:
+    database_user = "root"
+    database_host = "db"
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "flashcard_db",
+        "USER": database_user,
+        "PASSWORD": "Nttpc123",
+        "HOST": database_host,
+        "PORT": "3306",
+        "OPTIONS": {
+            "charset": "utf8mb4",
+        },
+    }
 }

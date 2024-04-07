@@ -5,6 +5,7 @@ type GetUserProfileType = {
 const GetUserProfile = async(token:string):Promise<GetUserProfileType> => {
   const response = await fetch(`${process.env.REACT_APP_API_URL}/api/profile/`, {
     method: 'GET',
+    mode: "cors",
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Token ${token}`

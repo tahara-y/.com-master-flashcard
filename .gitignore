@@ -15,6 +15,7 @@ __pycache__
 
 # 環境変数を定義したファイルの除外
 backend/.env
+backend/.env.production
 backend/.envrc
 
 frontend/.env

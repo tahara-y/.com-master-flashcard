@@ -27,7 +27,7 @@ services:
     ports:
       - "8000:8000"
     command: python manage.py runserver 0.0.0.0:8000
-    container_name: backend_container
+    container_name: backend-container
     depends_on:
       db:
         condition: service_healthy
@@ -38,8 +38,8 @@ services:
       - ./frontend:/app
     command: sh -c 'yarn install && yarn start'
     ports:
-      - "3000:3000"
-    container_name: frontend_container
+      - "3001:3000"
+    container_name: frontend-container
     depends_on:
       db:
         condition: service_healthy
