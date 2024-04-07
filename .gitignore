@@ -18,8 +18,8 @@ backend/.env
 backend/.env.production
 backend/.envrc
 
-frontend/.env
-frontend/.envrc
+# frontend/.env
+# frontend/.envrc
 
 # MySQL
 backend/mysql
