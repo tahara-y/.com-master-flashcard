@@ -50,6 +50,6 @@ services:
       dockerfile: ./Dockerfile # nginxディレクトリ内のDockerfileを指定
     ports:
       - "80:80"
+    container_name: nginx-container
     depends_on:
-      - frontend
       - backend

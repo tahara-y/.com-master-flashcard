@@ -132,14 +132,14 @@ CORS_ALLOW_METHODS = [
 
 ALLOWED_HOSTS = ['*']
 
-CSRF_TRUSTED_ORIGINS = ['http://54.178.250.70']
+CSRF_TRUSTED_ORIGINS = ['http://54.178.250.70', 'http://com-master-flashcard.net', 'http://localhost/']
 
 # Djangoアプリケーションで商用環に適用する場合は "production" を開発環境に適用する場合は"develop"を設定する。
-django_env = "production"
+django_env = "develop"
 
 if django_env == "production":
     database_user = "admin"
-    database_host = "db"
+    database_host = "com-master-flashcard-db.cintktqwup3t.ap-northeast-1.rds.amazonaws.com"
 else:
     database_user = "root"
     database_host = "db"

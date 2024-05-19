@@ -38,7 +38,7 @@ const LearningProgressButtons: React.FC<LearningProgressButtonsPropsType> = (
     setChapterNum(num);
     navigate("/flashcard", {
       //NOTE:currentFlashcardNum+1としたのは現在学習済みの単語の次の物を取得するため。
-      state: { chapterNum: num, currentFlashcardNum: currentFlashcardNum + 1 },
+      state: { chapterNum: num, currentFlashcardNum: currentFlashcardNum },
     });
   };
 
