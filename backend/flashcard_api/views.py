@@ -50,21 +50,37 @@ class UserProfileView(viewsets.ModelViewSet):
         return UserProfile.objects.filter(user=self.request.user)
 
     def create(self, request, *args, **kwargs):
-        # ユーザーに関連する既存のエントリを検索
-        user_progress, created = UserProfile.objects.get_or_create(
-            user=request.user, defaults=request.data
-        )
-
-        # 既存のエントリが見つかった場合は、データを更新
-        if not created:
-            for key, value in request.data.items():
-                setattr(user_progress, key, value)
-            user_progress.save()
-
-        serializer = self.get_serializer(user_progress)
+        if UserProfile.objects.filter(user=request.user).exists():
+            return Response(
+                {"detail": "User profile already exists."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(user=request.user)
+        
         return Response(
             serializer.data,
-            status=status.HTTP_201_CREATED if created else status.HTTP_200_OK,
+            status=status.HTTP_201_CREATED
+        )
+
+    def update_profile(self, request, *args, **kwargs):
+        try:
+            user_profile = UserProfile.objects.get(user=request.user)
+        except UserProfile.DoesNotExist:
+            return Response(
+                {"detail": "User profile does not exist."},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        serializer = self.get_serializer(user_profile, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(
+            serializer.data,
+            status=status.HTTP_200_OK
         )
 
 

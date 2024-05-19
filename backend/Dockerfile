@@ -1,7 +1,7 @@
 FROM python:3.9-slim-buster
 
 WORKDIR /backend
-COPY . .
+COPY . /backend
 
 # 依存関係をインストール（MySQLクライアント含む）
 # また、イメージのサイズを小さく保つために、一時ファイルを削除します。
