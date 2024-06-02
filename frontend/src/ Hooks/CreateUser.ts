@@ -1,7 +1,7 @@
 import { SignUpFormType } from "../Molecules/CommonPage/ValidateForm";
 
 export const CreateUser = async (createUserProps: SignUpFormType) => {
-  await fetch(`${process.env.REACT_APP_API_URL}/api/create/`, {
+  const response = await fetch(`${process.env.REACT_APP_API_URL}/api/create/`, {
     method: "POST",
     mode: "cors",
     headers: {
@@ -12,5 +12,11 @@ export const CreateUser = async (createUserProps: SignUpFormType) => {
       password: createUserProps.password,
     }),
   });
-  console.log('REACT_APP_API_URL' ,process.env.REACT_APP_API_URL)
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.detail || "An error occurred during sign up");
+  }
+
+  return response.json();
 };

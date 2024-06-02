@@ -1,8 +1,8 @@
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import MainHeader from "../Molecules/FlashcardPage/Header";
 import styled from "@emotion/styled";
 import { Card, CardBody, Heading, Text } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 import { GetChapterNum, getChapterNum } from "../ Hooks/GetChapterNum";
 import { Flashcard, getFlashcards } from "../ Hooks/GetFlashcard";
 import { fetchUserProfile } from "../ Hooks/PostUserProfile";
@@ -10,9 +10,11 @@ import { Footer } from "../Molecules/FlashcardPage/Footer";
 
 const FlashcardPage = () => {
   const location = useLocation();
-  const state = location.state as {
-    chapterNum: number;
-    currentFlashcardNum: number;
+  const navigate = useNavigate();
+  // NOTE：location.stateのデフォルト値を設定
+  const state = location.state || {
+    chapterNum: 1,
+    currentFlashcardNum: 1,
   };
 
   const [currentFlashcardNum, setCurrentFlashcardNum] = useState<number>(
@@ -24,6 +26,13 @@ const FlashcardPage = () => {
   const itemsPerPage = 15;
 
   const token = localStorage.getItem("token");
+
+  // tokenがnullの場合に遷移するuseEffectを追加
+  useEffect(() => {
+    if (!token) {
+      navigate("/");
+    }
+  }, [token, navigate]);
 
   useEffect(() => {
     const fetchChapterNumData = async () => {

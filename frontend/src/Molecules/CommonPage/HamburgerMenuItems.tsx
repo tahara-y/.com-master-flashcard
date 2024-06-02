@@ -1,21 +1,21 @@
-import HamburgerMenu from '../../ Atoms/HamburgerMenu/HamburgerMenu';
-import { Button } from '@chakra-ui/react';
-import { AiOutlineSetting } from 'react-icons/ai';
-import { BiUser } from 'react-icons/bi';
-import { HiOutlineLogout } from 'react-icons/hi';
-import styled from '@emotion/styled';
-import { useNavigate } from 'react-router-dom';
+import HamburgerMenu from "../../ Atoms/HamburgerMenu/HamburgerMenu";
+import { Button } from "@chakra-ui/react";
+import { AiOutlineSetting } from "react-icons/ai";
+import { BiUser } from "react-icons/bi";
+import { HiOutlineLogout } from "react-icons/hi";
+import styled from "@emotion/styled";
+import { useNavigate } from "react-router-dom";
 
 const HamburgerMenuItems = () => {
   const navigate = useNavigate();
   const handleClickSignOutButton = () => {
-    navigate('../');
+    navigate("../");
   };
 
   return (
     <HamburgerMenu>
       <SContent>
-        <SDivider />
+        {/* <SDivider />
         < div >
           <SButton variant='ghost'>
             <AiOutlineSetting size="24px" />
@@ -28,17 +28,17 @@ const HamburgerMenuItems = () => {
             <BiUser size="24px" />
             <SButtonText>Profile</SButtonText>
           </SButton>
-        </div>
+        </div> */}
         <SDivider />
         <div>
-          <SButton onClick={handleClickSignOutButton} variant='ghost'>
+          <SButton onClick={handleClickSignOutButton} variant="ghost">
             <HiOutlineLogout size="24px" />
             <SButtonText>Sign out</SButtonText>
           </SButton>
         </div>
         <SDivider />
       </SContent>
-    </HamburgerMenu >
+    </HamburgerMenu>
   );
 };
 

@@ -9,6 +9,7 @@ import {
   GetUserProfileData,
   ResponseUserProfileDataType,
 } from "../ Hooks/GetUserProfileData";
+import { useNavigate } from "react-router-dom";
 
 // TODO: 以下の変数をnavigateで渡すようにする。
 // const [currentFlashcardNum, setCurrentFlashcardNum] = useState<number>(1);
@@ -20,6 +21,7 @@ const MenuPage = () => {
   const [chapterData, setChapterData] = useState<ChapterDataType | null>(null);
 
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserProfileData = async () => {
@@ -37,6 +39,8 @@ const MenuPage = () => {
     };
     if (token) {
       fetchUserProfileData();
+    } else {
+      navigate("/");
     }
     // tokenを依存関係に含めてしまうと、Flashcard画面からメニュー画面に戻った時にこの関数が更新されない。
     // eslint-disable-next-line react-hooks/exhaustive-deps

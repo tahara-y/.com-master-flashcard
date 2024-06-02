@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import permissions, status, viewsets
-from rest_framework.generics import CreateAPIView, RetrieveAPIView
+from rest_framework.generics import CreateAPIView, RetrieveAPIView, UpdateAPIView
 from rest_framework.response import Response
 
 from .models import ChapterNumber, Flashcard, UserProfile
@@ -16,7 +16,19 @@ class CreateUserView(CreateAPIView):
     serializer_class = UserSerializer
     permission_classes = [permissions.AllowAny]
 
+
+class CreateUserView(CreateAPIView):
+    serializer_class = UserSerializer
+    permission_classes = [permissions.AllowAny]
+
     def create(self, request, *args, **kwargs):
+        username = request.data.get("username")
+        if User.objects.filter(username=username).exists():
+            return Response(
+                {"detail": "User with this username already exists."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
         response = super().create(request, *args, **kwargs)
 
         if response.status_code == status.HTTP_201_CREATED:
@@ -24,6 +36,26 @@ class CreateUserView(CreateAPIView):
             UserProfile.objects.create(user=user)
 
         return response
+
+
+class UpdateUserView(UpdateAPIView):
+    serializer_class = UserProfileSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def update(self, request, *args, **kwargs):
+        try:
+            user = User.objects.get(user=request.user)
+        except User.DoesNotExist:
+            return Response(
+                {"detail": "User profile does not exist."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        serializer = self.get_serializer(user, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class ProfileUserView(RetrieveAPIView):
@@ -50,37 +82,21 @@ class UserProfileView(viewsets.ModelViewSet):
         return UserProfile.objects.filter(user=self.request.user)
 
     def create(self, request, *args, **kwargs):
-        if UserProfile.objects.filter(user=request.user).exists():
-            return Response(
-                {"detail": "User profile already exists."},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-        
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save(user=request.user)
-        
-        return Response(
-            serializer.data,
-            status=status.HTTP_201_CREATED
+        # ユーザーに関連する既存のエントリを検索
+        user_progress, created = UserProfile.objects.get_or_create(
+            user=request.user, defaults=request.data
         )
 
-    def update_profile(self, request, *args, **kwargs):
-        try:
-            user_profile = UserProfile.objects.get(user=request.user)
-        except UserProfile.DoesNotExist:
-            return Response(
-                {"detail": "User profile does not exist."},
-                status=status.HTTP_404_NOT_FOUND
-            )
+        # 既存のエントリが見つかった場合は、データを更新
+        if not created:
+            for key, value in request.data.items():
+                setattr(user_progress, key, value)
+            user_progress.save()
 
-        serializer = self.get_serializer(user_profile, data=request.data, partial=True)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-
+        serializer = self.get_serializer(user_progress)
         return Response(
             serializer.data,
-            status=status.HTTP_200_OK
+            status=status.HTTP_201_CREATED if created else status.HTTP_200_OK,
         )
 
 
