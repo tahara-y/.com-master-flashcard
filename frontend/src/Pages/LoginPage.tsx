@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from 'react'
-import { InputGroup } from '@chakra-ui/react'
-import styled from '@emotion/styled'
-import FormInput from '../ Atoms/Forms/FormInput';
-import FormInputRightElement from '../ Atoms/Forms/FormInputRightElement';
-import PrimaryButton from '../ Atoms/Buttons/PrimaryButton';
-import { useNavigate } from 'react-router-dom';
-import { LogInFormType, logInValidate } from '../Molecules/CommonPage/ValidateForm';
-import { useFormik } from 'formik';
-import FormInvalidError from '../ Atoms/Forms/FormInvalidError';
-import GteAuthToken from '../ Hooks/GteAuthToken';
-import GetUserProfile from '../ Hooks/GetUserProfile';
+import React, { useEffect, useState } from "react";
+import { InputGroup } from "@chakra-ui/react";
+import styled from "@emotion/styled";
+import FormInput from "../ Atoms/Forms/FormInput";
+import FormInputRightElement from "../ Atoms/Forms/FormInputRightElement";
+import PrimaryButton from "../ Atoms/Buttons/PrimaryButton";
+import { useNavigate } from "react-router-dom";
+import {
+  LogInFormType,
+  logInValidate,
+} from "../Molecules/CommonPage/ValidateForm";
+import { useFormik } from "formik";
+import FormInvalidError from "../ Atoms/Forms/FormInvalidError";
+import GteAuthToken from "../ Hooks/GteAuthToken";
+import GetUserProfile from "../ Hooks/GetUserProfile";
 
 const LogInPage = () => {
   const [show, setShow] = useState(false);
@@ -23,11 +26,11 @@ const LogInPage = () => {
 
   const formik = useFormik<LogInFormType>({
     initialValues: {
-      userName: '',
-      password: '',
+      userName: "",
+      password: "",
     },
     validate: logInValidate,
-    onSubmit: () => { },
+    onSubmit: () => {},
   });
 
   const handleClickLogInButton = async () => {
@@ -37,21 +40,21 @@ const LogInPage = () => {
     });
     if (!Boolean(formik.errors.userName) && !Boolean(formik.errors.password)) {
       try {
-        const authTokenData = await GteAuthToken(formik.values)
+        const authTokenData = await GteAuthToken(formik.values);
         if (!authTokenData.status) {
           formik.setErrors({
-            userName: 'ユーザーネームかパスワードに誤りがあります',
-            password: 'ユーザーネームかパスワードに誤りがあります',
+            userName: "ユーザーネームかパスワードに誤りがあります",
+            password: "ユーザーネームかパスワードに誤りがあります",
           });
           return;
-        };
-        const userProfileData = await GetUserProfile(authTokenData.token)
-        localStorage.setItem('token', authTokenData.token);
-        navigate('/menu', { state: userProfileData });
+        }
+        const userProfileData = await GetUserProfile(authTokenData.token);
+        localStorage.setItem("token", authTokenData.token);
+        navigate("/menu", { state: userProfileData });
       } catch (error) {
-        console.error('サインイン中にエラーが発生しました:', error);
-      };
-    };
+        console.error("サインイン中にエラーが発生しました:", error);
+      }
+    }
   };
 
   useEffect(() => {
@@ -69,70 +72,77 @@ const LogInPage = () => {
       <form onSubmit={formik.handleSubmit}>
         <SHeader>
           <SHeaderText>Log In</SHeaderText>
-          <SLogin href='/signup'>Sign Up</SLogin>
+          <SLogin href="/signup">Sign Up</SLogin>
         </SHeader>
         <SContent>
           <SInputContainer>
             <SInputFormStyle>
               <FormInput
-                placeholder='Email'
-                height='3.125rem'
-                name='userName'
+                placeholder="Email"
+                height="3.125rem"
+                name="userName"
                 value={formik.values.userName}
                 onChange={formik.handleChange}
-                isInvalid={touchedFormInput.userName && Boolean(formik.errors.userName)}
-                errorBorderColor='crimson'
+                isInvalid={
+                  touchedFormInput.userName && Boolean(formik.errors.userName)
+                }
+                errorBorderColor="crimson"
               />
               <FormInvalidError
-                isInvalid={touchedFormInput.userName && Boolean(formik.errors.userName)}
+                isInvalid={
+                  touchedFormInput.userName && Boolean(formik.errors.userName)
+                }
                 errorMessage={formik.errors.userName}
               />
             </SInputFormStyle>
             <SInputFormStyle>
               <InputGroup>
                 <FormInput
-                  type={show ? 'text' : 'password'}
-                  placeholder='Password'
-                  height='3.125rem'
-                  name='password'
+                  type={show ? "text" : "password"}
+                  placeholder="Password"
+                  height="3.125rem"
+                  name="password"
                   value={formik.values.password}
                   onChange={formik.handleChange}
-                  isInvalid={touchedFormInput.password && Boolean(formik.errors.password)}
-                  errorBorderColor='crimson'
+                  isInvalid={
+                    touchedFormInput.password && Boolean(formik.errors.password)
+                  }
+                  errorBorderColor="crimson"
                 />
                 <FormInputRightElement
-                  width='3rem'
-                  height='3.125rem'
-                  h='3.125rem'
-                  size='sm'
+                  width="3rem"
+                  height="3.125rem"
+                  h="3.125rem"
+                  size="sm"
                   onClick={handleClickHideOrShowButton}
-                  variant='unstyled'
+                  variant="unstyled"
                   show={show}
-                >
-                </FormInputRightElement>
+                ></FormInputRightElement>
               </InputGroup>
               <FormInvalidError
-                isInvalid={touchedFormInput.password && Boolean(formik.errors.password)}
+                isInvalid={
+                  touchedFormInput.password && Boolean(formik.errors.password)
+                }
                 errorMessage={formik.errors.password}
               />
             </SInputFormStyle>
           </SInputContainer>
           <SButtonStyle>
             <PrimaryButton
-              colorScheme='green'
-              color='white'
+              colorScheme="green"
+              color="white"
               onClick={handleClickLogInButton}
             >
               Log In
             </PrimaryButton>
           </SButtonStyle>
-          <SForgotContent>
+          {/* <SForgotContent>
             <SForgot href=''>Forgot your Password?</SForgot>
-          </SForgotContent>
-        </SContent >
+          </SForgotContent> */}
+        </SContent>
       </form>
-    </ >
-  )
+    </>
+  );
 };
 
 const SHeader = styled.div`
@@ -151,7 +161,7 @@ const SHeaderText = styled.div`
 `;
 
 const SLogin = styled.a`
-  color: #38A169;
+  color: #38a169;
   position: absolute;
   right: 1rem;
   font-weight: 600;
@@ -181,7 +191,7 @@ const SForgotContent = styled.div`
 `;
 
 const SForgot = styled.a`
-  color: #38A169;
+  color: #38a169;
   font-weight: bold;
 `;
 

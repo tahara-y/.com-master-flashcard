@@ -1,6 +1,10 @@
 import os
 from pathlib import Path
 
+import pymysql
+
+pymysql.install_as_MySQLdb()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -41,7 +45,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    'corsheaders.middleware.CorsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
 ROOT_URLCONF = "backend.urls"
@@ -130,16 +134,22 @@ CORS_ALLOW_METHODS = [
     "PUT",
 ]
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*"]
 
-CSRF_TRUSTED_ORIGINS = ['http://54.178.250.70', 'http://com-master-flashcard.net', 'http://localhost/']
+CSRF_TRUSTED_ORIGINS = [
+    "http://54.178.250.70",
+    "http://com-master-flashcard.net",
+    "http://localhost",
+]
 
 # Djangoアプリケーションで商用環に適用する場合は "production" を開発環境に適用する場合は"develop"を設定する。
 django_env = "develop"
 
 if django_env == "production":
     database_user = "admin"
-    database_host = "com-master-flashcard-db.cintktqwup3t.ap-northeast-1.rds.amazonaws.com"
+    database_host = (
+        "com-master-flashcard-db.cintktqwup3t.ap-northeast-1.rds.amazonaws.com"
+    )
 else:
     database_user = "root"
     database_host = "db"

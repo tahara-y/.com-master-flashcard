@@ -148,9 +148,9 @@ const SingUpPage = () => {
             Sign UP
           </PrimaryButton>
         </SButtonStyle>
-        <SForgotContent>
+        {/* <SForgotContent>
           <SForgot href="">Forgot your Password?</SForgot>
-        </SForgotContent>
+        </SForgotContent> */}
       </SContent>
     </>
   );
